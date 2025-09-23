@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package icecap.agent.v1;
+
+import "icecap/agent/v1/common.proto";
+
+enum CommandType {
+  COMMAND_TYPE_UNSPECIFIED = 0;
+  COMMAND_TYPE_LUA_EXECUTE = 1;
+  COMMAND_TYPE_LUA_READ_VARIABLE = 2;
+  COMMAND_TYPE_CLICK_TO_MOVE = 3;
+}
+
+enum ClickToMoveAction {
+  CLICK_TO_MOVE_ACTION_UNSPECIFIED = 0;
+  CLICK_TO_MOVE_ACTION_FACE_TARGET = 1;
+  CLICK_TO_MOVE_ACTION_FACE = 2;
+  CLICK_TO_MOVE_ACTION_MOVE = 3;
+}
+
+message ClickToMovePayload {
+  ClickToMoveAction action = 1;
+  float precision = 2;
+  uint32 player_base_address = 3;
+
+  oneof target {
+    Position position = 4;
+    uint64 interact_entity_guid = 5;
+  }
+}
+
+message LuaExecutePayload {
+  string executable_code = 1;
+}
+
+message LuaReadVariablePayload {
+  string variable_name = 1;
+}
+
+message Command {
+  string id = 1;
+  string operation_id = 2;
+  CommandType type = 3;
+
+  oneof payload {
+    LuaExecutePayload lua_execute_payload = 10;
+    LuaReadVariablePayload lua_read_variable_payload = 11;
+    ClickToMovePayload click_to_move_payload = 12;
+  }
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package icecap.agent.v1;
+
+message LuaVariableReadEventPayload {
+  string result = 1;
+}
+
+enum EventType {
+  EVENT_TYPE_LUA_VARIABLE_READ_UNSPECIFIED = 0;
+}
+
+message Event {
+  string id = 1;
+  string operation_id = 2;
+  EventType type = 3;
+
+  oneof payload {
+    LuaVariableReadEventPayload lua_variable_read_event_payload = 10;
+  }
+}
