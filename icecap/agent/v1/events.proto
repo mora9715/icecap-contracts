@@ -9,6 +9,8 @@ message LuaVariableReadEventPayload {
 enum EventType {
   EVENT_TYPE_UNSPECIFIED = 0;
   EVENT_TYPE_LUA_VARIABLE_READ = 1;
+  EVENT_TYPE_OPERATION_SUCCEEDED = 2;
+  EVENT_TYPE_OPERATION_FAILED = 3;
 }
 
 message Event {
